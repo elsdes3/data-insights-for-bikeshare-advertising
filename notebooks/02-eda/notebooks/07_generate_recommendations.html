@@ -7637,11 +7637,6 @@ a.anchor-link {
     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">processed_data_dir</span><span class="p">,</span> <span class="s1">'stations_performance__*.parquet.gzip'</span><span class="p">)</span>
 <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-<span class="c1"># recommended performance filters</span>
-<span class="n">fpath_recommends_performance</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">processed_data_dir</span><span class="p">,</span> <span class="s1">'recommendations_performance__*.parquet.gzip'</span><span class="p">)</span>
-<span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-
 <span class="c1"># recommended temporal filters</span>
 <span class="n">fpath_recommends_temporal</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span>
     <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">processed_data_dir</span><span class="p">,</span> <span class="s1">'recommendations_temporal__*.parquet.gzip'</span><span class="p">)</span>
@@ -7744,32 +7739,6 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=98c64600-ae32-4881-84e5-83bad439e4c7">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Load combined temporal+performance filters to generate recommendations for stations to be used during the campaign</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=ada5f61e-97fd-49ec-a807-8512181e0a37">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_performance_recommends</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">fpath_recommends_performance</span><span class="p">)</span>
-<span class="n">recommended_performance_filters</span> <span class="o">=</span> <span class="n">df_performance_recommends</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2a42917a-75be-4437-834a-378853230767">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7848,7 +7817,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
@@ -8513,8 +8482,8 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>CPU times: user 43.2 ms, sys: 0 ns, total: 43.2 ms
-Wall time: 42.5 ms
+<pre>CPU times: user 36.9 ms, sys: 5.68 ms, total: 42.6 ms
+Wall time: 42.1 ms
 </pre>
 </div>
 </div>
@@ -8566,7 +8535,7 @@ Wall time: 42.5 ms
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
@@ -8577,7 +8546,6 @@ Wall time: 42.5 ms
 <span class="s2">                   True AS is_recommended</span>
 <span class="s2">            FROM df_top_stations</span>
 <span class="s2">            WHERE </span><span class="si">{</span><span class="n">recommended_station_filters</span><span class="si">}</span>
-<span class="s2">            AND </span><span class="si">{</span><span class="n">recommended_performance_filters</span><span class="si">}</span>
 <span class="s2">        ),</span>
 <span class="s2">        -- 2. combine with all stations and fill missing values with FALSE in order to identify</span>
 <span class="s2">        -- unrecommended stations</span>
@@ -8769,9 +8737,9 @@ Wall time: 42.5 ms
 <th>598</th>
 <th>2</th>
 <th>2</th>
-<th>611</th>
+<th>610</th>
 <th>1</th>
-<th>611</th>
+<th>610</th>
 </tr>
 <tr>
 <th>missing</th>
@@ -9324,8 +9292,8 @@ Wall time: 42.5 ms
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>CPU times: user 62.5 ms, sys: 5.32 ms, total: 67.8 ms
-Wall time: 62.9 ms
+<pre>CPU times: user 62.3 ms, sys: 3.28 ms, total: 65.5 ms
+Wall time: 61.5 ms
 </pre>
 </div>
 </div>
@@ -9372,7 +9340,7 @@ Wall time: 62.9 ms
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
@@ -9497,8 +9465,8 @@ Wall time: 62.9 ms
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>CPU times: user 17 ms, sys: 1.03 ms, total: 18.1 ms
-Wall time: 17.6 ms
+<pre>CPU times: user 17.6 ms, sys: 0 ns, total: 17.6 ms
+Wall time: 17.3 ms
 </pre>
 </div>
 </div>
@@ -9531,7 +9499,7 @@ Wall time: 17.6 ms
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
@@ -9877,8 +9845,8 @@ Wall time: 17.6 ms
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>CPU times: user 89.3 ms, sys: 34.5 ms, total: 124 ms
-Wall time: 53 ms
+<pre>CPU times: user 72 ms, sys: 51.3 ms, total: 123 ms
+Wall time: 55.6 ms
 </pre>
 </div>
 </div>
@@ -9904,7 +9872,7 @@ Wall time: 53 ms
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">num_is_top</span><span class="p">,</span> <span class="n">num_stations_used</span><span class="p">,</span> <span class="n">num_recommends</span> <span class="o">=</span> <span class="p">[</span>
@@ -9949,11 +9917,11 @@ Wall time: 53 ms
 <span class="s2">        ),</span>
 <span class="s2">        t3 AS (</span>
 <span class="s2">            SELECT 'Fraction of stations used that are recommended (%)' AS metric,</span>
-<span class="s2">                   'Fraction of bike share stations accounted that are recommended' AS description,</span>
+<span class="s2">                   'Fraction of bike share stations that are recommended' AS description,</span>
 <span class="s2">                   'recommendation' AS metric_type,</span>
 <span class="s2">                   '</span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">' AS data_used,</span>
-<span class="s2">                   make_date(2023, 5, 1) AS start_date,</span>
-<span class="s2">                   make_date(2023, 12, 31) AS end_date,</span>
+<span class="s2">                   make_date(2018, 1, 1) AS start_date,</span>
+<span class="s2">                   make_date(2022, 12, 31) AS end_date,</span>
 <span class="s2">                   'historical' AS timeframe,</span>
 <span class="s2">                   </span><span class="si">{</span><span class="n">num_recommends</span><span class="si">}</span><span class="s2"> AS total_recommended,</span>
 <span class="s2">                   </span><span class="si">{</span><span class="n">num_stations_used</span><span class="si">}</span><span class="s2"> AS total,</span>
@@ -10036,7 +10004,7 @@ Wall time: 53 ms
 <th>3</th>
 <th>1</th>
 <th>3</th>
-<th>2</th>
+<th>3</th>
 <th>2</th>
 <th>2</th>
 <th>3</th>
@@ -10060,6 +10028,19 @@ Wall time: 53 ms
 <tbody>
 <tr>
 <th>0</th>
+<td>Fraction of stations used that are recommended (%)</td>
+<td>Fraction of bike share stations that are recommended</td>
+<td>recommendation</td>
+<td>overall performance insights from 98 top-performing out of 627 stations used between 2018 and 2022</td>
+<td>2018-01-01</td>
+<td>2022-12-31</td>
+<td>historical</td>
+<td>92</td>
+<td>627</td>
+<td>14.673046</td>
+</tr>
+<tr>
+<th>1</th>
 <td>Market Penetration (%)</td>
 <td>Fraction of bike share ridership accounted for by recommended stations</td>
 <td>recommendation</td>
@@ -10067,12 +10048,12 @@ Wall time: 53 ms
 <td>2022-01-01</td>
 <td>2022-12-31</td>
 <td>historical</td>
-<td>1485958</td>
+<td>1679669</td>
 <td>4216239</td>
-<td>35.243685</td>
+<td>39.838088</td>
 </tr>
 <tr>
-<th>1</th>
+<th>2</th>
 <td>Fraction of activated hours (%)</td>
 <td>Fraction of available campaign hours during which it is recommended to display ads</td>
 <td>recommendation</td>
@@ -10083,19 +10064,6 @@ Wall time: 53 ms
 <td>1224</td>
 <td>5376</td>
 <td>22.767857</td>
-</tr>
-<tr>
-<th>2</th>
-<td>Fraction of stations used that are recommended (%)</td>
-<td>Fraction of bike share stations accounted that are recommended</td>
-<td>recommendation</td>
-<td>overall performance insights from 98 top-performing out of 627 stations used between 2018 and 2022</td>
-<td>2023-05-01</td>
-<td>2023-12-31</td>
-<td>historical</td>
-<td>78</td>
-<td>627</td>
-<td>12.440191</td>
 </tr>
 </tbody>
 </table>
@@ -10113,9 +10081,9 @@ Wall time: 53 ms
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Observations</strong></p>
 <ol>
-<li>78 recommended and top-performing stations captured a 35% market penetration of total bike share ridership in 2022 across the Bike Share Toronto network. The remaining ~550 stations are required to capture the remaining 65%.</li>
+<li>92 top-performing stations are recommended for use during the campaign and they captured approximately 40% market penetration of total bike share ridership in 2022 across the Bike Share Toronto network. The remaining ~530 stations are required to capture the remaining 60%.</li>
 <li>The recommended hourly schedule calls for ads to be displayed during approximately 23% of all available hours during the combined campaign execution window of May 22 to December 31 of 2023.</li>
-<li>~12% of the top-performing stations used in 2018 to 2022 ridership are recommended for displaying digital ads.</li>
+<li>~15% (92) out of all stations used from 2018 to 2022 ridership are recommended for displaying digital ads.</li>
 </ol>
 </div>
 </div>
@@ -10147,7 +10115,7 @@ Wall time: 53 ms
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
@@ -10171,9 +10139,9 @@ Wall time: 53 ms
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Exported 627 rows of recommended_stations data to /home/jovyan/data/processed/recommended_stations__20240321_133049.parquet.gzip
-CPU times: user 24.4 ms, sys: 4.48 ms, total: 28.8 ms
-Wall time: 28.7 ms
+<pre>Exported 627 rows of recommended_stations data to /home/jovyan/data/processed/recommended_stations__20240322_094840.parquet.gzip
+CPU times: user 20.4 ms, sys: 8.45 ms, total: 28.8 ms
+Wall time: 28.5 ms
 </pre>
 </div>
 </div>
@@ -10195,7 +10163,7 @@ Wall time: 28.7 ms
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
@@ -10219,9 +10187,9 @@ Wall time: 28.7 ms
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Exported 10,752 rows of recommended_schedule data to /home/jovyan/data/processed/recommended_schedule__20240321_133049.parquet.gzip
-CPU times: user 12.1 ms, sys: 4.14 ms, total: 16.2 ms
-Wall time: 16 ms
+<pre>Exported 10,752 rows of recommended_schedule data to /home/jovyan/data/processed/recommended_schedule__20240322_094840.parquet.gzip
+CPU times: user 11.6 ms, sys: 3.64 ms, total: 15.2 ms
+Wall time: 15 ms
 </pre>
 </div>
 </div>
@@ -10306,7 +10274,7 @@ Wall time: 16 ms
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">packages</span> <span class="o">=</span> <span class="p">[</span>
@@ -10338,7 +10306,7 @@ Wall time: 16 ms
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Last updated: 2024-03-21 17:30:49 UTC
+<pre>Last updated: 2024-03-22 13:48:40 UTC
 
 Python implementation: CPython
 Python version       : 3.11.8
