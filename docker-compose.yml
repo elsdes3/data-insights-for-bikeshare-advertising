@@ -1,0 +1,36 @@
+version: '3.9' # version of compose format
+
+services:
+  get-data:
+    container_name: get-data
+    build:
+      context: ./notebooks/01-get-data
+      dockerfile: Dockerfile
+    restart: 'no'
+    ports:
+      - 8888:8888
+    env_file: ${HOME}/Downloads/.env
+    environment:
+      NB_UID: 1000
+      NB_GID: 1000
+    volumes:
+      - ./notebooks/01-get-data/notebooks:/home/jovyan/notebooks
+      - ./src:/home/jovyan/src
+      - ./data:/home/jovyan/data
+
+  eda:
+    container_name: eda
+    build:
+      context: ./notebooks/02-eda
+      dockerfile: Dockerfile
+    restart: 'no'
+    ports:
+      - 8889:8888
+    environment:
+      NB_UID: 1000
+      NB_GID: 1000
+    volumes:
+      - ./notebooks/02-eda/notebooks:/home/jovyan/notebooks
+      - ./src:/home/jovyan/src
+      - ./data:/home/jovyan/data
+      - ./reports:/home/jovyan/reports
