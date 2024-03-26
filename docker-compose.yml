@@ -1,5 +1,3 @@
-version: '3.9' # version of compose format
-
 services:
   get-data:
     container_name: get-data

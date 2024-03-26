@@ -1,0 +1,9 @@
+# Function reference {.doc .doc-index}
+
+## Some functions
+
+Functions to inspect docstrings.
+
+| | |
+| --- | --- |
+| [pandas_utils](pandas_utils.qmd#src.pandas_utils) | Define utilities to work with DataFrames. |

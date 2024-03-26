@@ -15,7 +15,14 @@ from IPython.display import display
 
 
 def show_df(df: pd.DataFrame) -> None:
-    """."""
+    """
+    Show DataFrame with a summary in multi-row header.
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+        dataframe to be shown
+    """
     df_disp = df.copy()
     df_disp.columns = pd.MultiIndex.from_tuples(
         list(
@@ -34,7 +41,16 @@ def show_df(df: pd.DataFrame) -> None:
 def show_nans_dtypes_nunique(
     df: pd.DataFrame, show_transpose: bool = False
 ) -> None:
-    """."""
+    """
+    Summarize missing values, datatypes and number of unique values in header.
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+        dataframe to be summarized
+    show_transpose: bool=False
+        whether to show a transpose of the summarized DataFrame
+    """
     df_nans_dtypes = (
         df.isna()
         .sum()

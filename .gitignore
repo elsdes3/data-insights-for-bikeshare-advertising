@@ -97,3 +97,5 @@ models/
 
 # Mypy cache
 .mypy_cache/
+
+/.quarto/

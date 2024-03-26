@@ -1,0 +1,29 @@
+project:
+  type: website
+  preview:
+    port: 4200
+    browser: true
+  render:
+    - "*.qmd"
+    - "!notebooks/01-get-data/notebooks/*.ipynb"
+    - "!notebooks/02-eda/notebooks/*.ipynb"
+  output-dir: _site
+
+# tell quarto to read the generated sidebar
+metadata-files:
+  - _sidebar.yml
+
+quartodoc:
+  # the name used to import the package you want to create reference docs for
+  package: src
+
+  # write sidebar data to this file
+  sidebar: _sidebar.yml
+
+  sections:
+    - title: Some functions
+      desc: Functions to inspect docstrings.
+      contents:
+        # the functions being documented in the package.
+        # you can refer to anything: class methods, modules, etc..
+        - pandas_utils
