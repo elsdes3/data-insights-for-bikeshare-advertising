@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-"""Define utilities to work with files."""
+"""Define utilities to create and customize Altair charts."""
 
 # pylint: disable=invalid-name,dangerous-default-value
 # pylint: disable=too-many-locals,unused-argument,unnecessary-lambda

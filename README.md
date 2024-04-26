@@ -86,4 +86,3 @@ See the project documentation [here](https://natural-globe-b44.notion.site/Bike-
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
-# data-insights-for-bikeshare-advertising

@@ -11,7 +11,7 @@ dependencies:
     - contexttimer==0.3.3
     - tqdm==4.66.2
     - meteostat==1.6.7
-    - holidays==0.44
+    - holidays==0.47
   - conda:
     - ipykernel==6.29.3
     - gcc==13.2.0
@@ -20,7 +20,7 @@ dependencies:
     - pyproj
     - shapely
     - geopandas
-    - python-duckdb==0.10.0
+    - python-duckdb==0.10.2
     - duckdb-engine==0.11.2
     - pyarrow==15.0.1
-    - pandas==2.2.1
+    - pandas==2.2.2
